@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Air Quality Dashboard{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+    {% block head %}{% endblock %}
+</head>
+<body>
+    
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="brand-icon">🌍</span>
+            <span class="brand-text">Air Quality Monitor</span>
+        </div>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">☰</button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="{{ url_for('dashboard') }}" class="{{ 'active' if active_page == 'dashboard' else '' }}">Dashboard</a></li>
+            <li><a href="{{ url_for('live_data') }}" class="{{ 'active' if active_page == 'live_data' else '' }}">Live Data</a></li>
+            <li><a href="{{ url_for('historical') }}" class="{{ 'active' if active_page == 'historical' else '' }}">Historical</a></li>
+            <li><a href="{{ url_for('prediction') }}" class="{{ 'active' if active_page == 'prediction' else '' }}">Prediction</a></li>
+            <li><a href="{{ url_for('ai_assistant') }}" class="{{ 'active' if active_page == 'ai_assistant' else '' }}">AI Assistant</a></li>
+            <li><a href="{{ url_for('sources') }}" class="{{ 'active' if active_page == 'sources' else '' }}">Data Sources</a></li>
+            <li><a href="{{ url_for('about') }}" class="{{ 'active' if active_page == 'about' else '' }}">About</a></li>
+        </ul>
+    </nav>
+
+    <div class="status-bar">
+        <div class="status-indicator" id="statusIndicator">
+            <span class="status-dot {{ data_status.status if data_status else 'no_data' }}"></span>
+            <span class="status-text">{{ data_status.label if data_status else '🔴 NO DATA AVAILABLE' }}</span>
+        </div>
+        <div class="status-message" id="statusMessage">{{ data_status.message if data_status else '' }}</div>
+    </div>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <p>Air Quality Monitoring and Prediction Dashboard &copy; 2026</p>
+        <p class="footer-note">Data source: Open-Meteo (CAMS model estimate)</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/animations.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/location.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

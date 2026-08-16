@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Prediction - Air Quality Monitor{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>PM2.5 Prediction</h1>
+    <p class="subtitle">Machine learning models for predicting future PM2.5 levels</p>
+</div>
+
+<div class="card prediction-controls">
+    <h3>Generate Prediction</h3>
+    <div class="prediction-form">
+        <div class="filter-group">
+            <label for="predCity">City:</label>
+            <select id="predCity">
+                <option value="">Select City</option>
+                {% for city in cities %}
+                <option value="{{ city }}">{{ city }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="filter-group">
+            <label for="predPeriod">Prediction Period:</label>
+            <select id="predPeriod">
+                <option value="next_hour">Next Hour</option>
+                <option value="next_day" selected>Next Day</option>
+                <option value="next_3_days">Next 3 Days</option>
+            </select>
+        </div>
+        <button class="btn btn-primary" onclick="generatePrediction()">Predict PM2.5</button>
+    </div>
+</div>
+
+<div class="loading-indicator" id="loadingIndicator" style="display: none;">
+    <div class="liquid-spinner"></div>
+    <p>Training model and generating prediction...</p>
+</div>
+
+<div class="error-message" id="errorMessage" style="display: none;"></div>
+
+<div id="predictionResults" style="display: none;">
+    
+    <div class="card prediction-result-card">
+        <h3>Predicted PM2.5</h3>
+        <div class="prediction-value" id="predictedValue">--</div>
+        <div class="prediction-unit">µg/m³</div>
+        <div class="prediction-note" id="predictionNote"></div>
+    </div>
+
+    <div class="card">
+        <h3>Model Evaluation Comparison</h3>
+        <div class="table-responsive">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Model</th>
+                        <th>MAE</th>
+                        <th>RMSE</th>
+                        <th>R²</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="metricsTableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Actual vs Predicted PM2.5</h3>
+        <div id="actualVsPredictedChart"></div>
+    </div>
+
+    <div class="card">
+        <h3>Feature Importance (Random Forest)</h3>
+        <div id="featureImportanceChart"></div>
+        <p class="chart-note">Feature importance indicates how useful each input feature was to the trained model. It does not prove causation.</p>
+    </div>
+</div>
+
+<div class="no-data-message" id="noDataMessage" style="display: none;">
+    <p>Insufficient historical data to generate a reliable prediction. Please synchronize data first.</p>
+</div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const citySelect = document.getElementById('predCity');
+        if (citySelect.options.length > 1) {
+            citySelect.selectedIndex = 1;
+        }
+    });
+</script>
+{% endblock %}

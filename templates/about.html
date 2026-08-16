@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}About - Air Quality Monitor{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>About This Project</h1>
+    <p class="subtitle">Air Quality Monitoring and Prediction Dashboard</p>
+</div>
+
+<div class="card">
+    <h3>Project Overview</h3>
+    <p>
+        This is an intermediate-level college mini-project that demonstrates a full-stack
+        web application for monitoring and predicting air quality. The system retrieves
+        real air-quality data from the Open-Meteo API, stores it locally in SQLite,
+        analyzes historical trends, and uses machine learning to predict future PM2.5 levels.
+    </p>
+</div>
+
+<div class="card">
+    <h3>Key Features</h3>
+    <ul class="feature-list">
+        <li>🌍 Real-time air quality monitoring using Open-Meteo API</li>
+        <li>📍 Browser geolocation for automatic location detection</li>
+        <li>🔎 City search for manual location selection</li>
+        <li>📊 Historical data analysis with interactive Plotly charts</li>
+        <li>🤖 Machine learning predictions (Linear Regression & Random Forest)</li>
+        <li>📈 Model evaluation with MAE, RMSE, and R² metrics</li>
+        <li>💾 Offline-first architecture with SQLite caching</li>
+        <li>🔄 Data synchronization with graceful fallback</li>
+        <li>💬 Optional AI-powered explanations</li>
+        <li>📥 CSV data export</li>
+    </ul>
+</div>
+
+<div class="card">
+    <h3>Technology Stack</h3>
+    <div class="tech-grid">
+        <div class="tech-item"><strong>Backend:</strong> Python, Flask</div>
+        <div class="tech-item"><strong>Frontend:</strong> HTML5, CSS3, JavaScript</div>
+        <div class="tech-item"><strong>Data:</strong> Pandas, NumPy</div>
+        <div class="tech-item"><strong>ML:</strong> Scikit-learn</div>
+        <div class="tech-item"><strong>Visualization:</strong> Plotly.js</div>
+        <div class="tech-item"><strong>Database:</strong> SQLite</div>
+        <div class="tech-item"><strong>API:</strong> Open-Meteo Air Quality API</div>
+        <div class="tech-item"><strong>AI:</strong> Google Gemini API (optional)</div>
+    </div>
+</div>
+
+<div class="card">
+    <h3>Important Notes</h3>
+    <div class="source-note">
+        <p>⚠️ <strong>Data provenance:</strong> Open-Meteo data is CAMS atmospheric-model output — a modeled estimate, not a physical ground-sensor reading. It is real, non-fabricated data but must be labeled honestly.</p>
+        <p>⚠️ <strong>AQI calculation:</strong> The Indian AQI is computed using CPCB methodology — the maximum of individual pollutant sub-indices, not an average.</p>
+        <p>⚠️ <strong>ML predictions:</strong> Predictions are educational estimates, not official forecasts.</p>
+        <p>⚠️ <strong>AI responses:</strong> AI-generated information is for general awareness and does not replace professional medical advice.</p>
+    </div>
+</div>
+
+<div class="card">
+    <h3>Academic Context</h3>
+    <p>
+        This project demonstrates: web development, REST API integration, offline-first architecture,
+        database management, data preprocessing, exploratory data analysis, data visualization,
+        machine learning, model evaluation, AI API integration, browser geolocation, and error handling.
+    </p>
+</div>
+
+{% endblock %}

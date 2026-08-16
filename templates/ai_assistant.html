@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}AI Assistant - Air Quality Monitor{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>AI Assistant</h1>
+    <p class="subtitle">Get AI-powered explanations of air quality data</p>
+</div>
+
+<div class="location-selector">
+    <div class="location-controls">
+        <button class="btn btn-primary" id="useMyLocationBtn" onclick="useMyLocation()">
+            📍 Use My Location
+        </button>
+        <div class="search-container">
+            <input type="text" id="citySearch" placeholder="🔎 Search any location worldwide (e.g., New York, Tokyo, London...)" autocomplete="off">
+            <div class="search-results" id="searchResults"></div>
+        </div>
+    </div>
+    <div class="location-info">
+        <span class="location-label">Selected Location:</span>
+        <span class="location-value" id="selectedLocation">Not selected</span>
+        <span class="live-badge" id="liveBadge" style="margin-left: auto;">
+            <span class="live-dot"></span> LIVE
+        </span>
+    </div>
+</div>
+
+<div class="card ai-controls">
+    <h3>AI Features</h3>
+    <div class="ai-buttons">
+        <button class="btn btn-primary" onclick="explainCurrentAirQuality()">
+            💬 Explain Current Air Quality
+        </button>
+        <button class="btn btn-secondary" onclick="explainPrediction()">
+            🔮 Explain Prediction
+        </button>
+        <button class="btn btn-secondary" onclick="giveHealthPrecautions()">
+            🏥 General Health Precautions
+        </button>
+    </div>
+</div>
+
+<div class="loading-indicator" id="loadingIndicator" style="display: none;">
+    <div class="liquid-spinner"></div>
+    <p>AI is analyzing the data...</p>
+</div>
+
+<div class="error-message" id="errorMessage" style="display: none;"></div>
+
+<div class="card ai-response" id="aiResponse" style="display: none;">
+    <h3>AI Response</h3>
+    <div class="ai-response-content" id="aiResponseContent"></div>
+    <p class="ai-disclaimer">AI-generated information is for general awareness and does not replace professional medical advice.</p>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        loadCityData('Delhi');
+    });
+</script>
+{% endblock %}

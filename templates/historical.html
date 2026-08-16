@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}Historical Analysis - Air Quality Monitor{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Historical Analysis</h1>
+    <p class="subtitle">Explore pollution trends, distributions, and correlations</p>
+</div>
+
+<div class="card filters-card">
+    <h3>Filters</h3>
+    <div class="filter-controls">
+        <div class="filter-group">
+            <label for="histCity">City:</label>
+            <select id="histCity">
+                <option value="">Select City</option>
+                {% for city in cities %}
+                <option value="{{ city }}">{{ city }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="filter-group">
+            <label for="histRange">Time Range:</label>
+            <select id="histRange">
+                <option value="24h">Last 24 Hours</option>
+                <option value="7d" selected>Last 7 Days</option>
+                <option value="30d">Last 30 Days</option>
+                <option value="custom">Custom Range</option>
+            </select>
+        </div>
+        <div class="filter-group" id="customRangeGroup" style="display: none;">
+            <label for="startDate">From:</label>
+            <input type="date" id="startDate">
+            <label for="endDate">To:</label>
+            <input type="date" id="endDate">
+        </div>
+        <button class="btn btn-primary" onclick="loadHistoricalData()">Apply Filters</button>
+    </div>
+</div>
+
+<div class="loading-indicator" id="loadingIndicator" style="display: none;">
+    <div class="liquid-spinner"></div>
+    <p>Loading historical data...</p>
+</div>
+
+<div class="error-message" id="errorMessage" style="display: none;"></div>
+
+<div id="chartsContainer" style="display: none;">
+    
+    <div class="card">
+        <h3>Pollutant Trends</h3>
+        <div id="trendChart"></div>
+    </div>
+
+    <div class="card">
+        <h3>Pollutant Correlation</h3>
+        <div id="correlationChart"></div>
+    </div>
+
+    <div class="card">
+        <h3>Pollutant Distributions</h3>
+        <div id="distributionChart"></div>
+    </div>
+
+    <div class="card">
+        <h3>Extreme Pollution Periods</h3>
+        <div class="extremes-grid" id="extremesGrid"></div>
+    </div>
+</div>
+
+<div class="no-data-message" id="noDataMessage" style="display: none;">
+    <p>No historical data available. Please synchronize data first.</p>
+</div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const citySelect = document.getElementById('histCity');
+        if (citySelect.options.length > 1) {
+            citySelect.selectedIndex = 1;
+            loadHistoricalData();
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Data Sources - Air Quality Monitor{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Data Sources</h1>
+    <p class="subtitle">Information about the data sources used in this project</p>
+</div>
+
+<div class="card">
+    <h3>Open-Meteo Air Quality API</h3>
+    <div class="source-info">
+        <p><strong>Endpoint:</strong> <code>https://air-quality-api.open-meteo.com/v1/air-quality</code></p>
+        <p><strong>Authentication:</strong> None required (non-commercial use)</p>
+        <p><strong>Data Type:</strong> CAMS atmospheric-model output</p>
+        <p><strong>Resolution:</strong> 11 km over Europe, 45 km globally</p>
+        <p><strong>Coverage:</strong> Worldwide coordinates</p>
+        <p><strong>Pollutants:</strong> PM2.5, PM10, CO, NO2, SO2, O3</p>
+        <p><strong>Documentation:</strong> <a href="https://open-meteo.com/en/docs/air-quality-api" target="_blank">open-meteo.com</a></p>
+    </div>
+    <div class="source-note">
+        <p>⚠️ <strong>Important:</strong> This data is a modeled estimate, not a physical ground-sensor reading. It is real, non-fabricated data but must be labeled honestly in the UI.</p>
+    </div>
+</div>
+
+<div class="card">
+    <h3>OpenAQ (Optional Secondary Source)</h3>
+    <div class="source-info">
+        <p><strong>Endpoint:</strong> <code>https://api.openaq.org/v3</code></p>
+        <p><strong>Authentication:</strong> Free API key required (X-API-Key header)</p>
+        <p><strong>Data Type:</strong> Physical ground-station measurements</p>
+        <p><strong>Coverage:</strong> Inconsistent in India outside major metros</p>
+        <p><strong>Registration:</strong> <a href="https://explore.openaq.org/register" target="_blank">explore.openaq.org/register</a></p>
+    </div>
+    <div class="source-note">
+        <p>ℹ️ This is a stretch-goal enhancement. The project is fully functional using Open-Meteo alone.</p>
+    </div>
+</div>
+
+<div class="card">
+    <h3>Kaggle Historical Dataset</h3>
+    <div class="source-info">
+        <p><strong>Purpose:</strong> Training machine learning models</p>
+        <p><strong>Placement:</strong> Place the CSV file in the <code>data/</code> directory</p>
+        <p><strong>Format:</strong> CSV with columns for date, city, and pollutant concentrations</p>
+        <p><strong>Mapping:</strong> Column names are auto-detected and can be configured</p>
+    </div>
+</div>
+
+<div class="card">
+    <h3>AI Provider (Optional)</h3>
+    <div class="source-info">
+        <p><strong>Default:</strong> Google Gemini API (free tier, no credit card required)</p>
+        <p><strong>Key Location:</strong> <code>.env</code> file (never exposed to frontend)</p>
+        <p><strong>Get a key:</strong> <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a></p>
+    </div>
+</div>
+
+{% endblock %}

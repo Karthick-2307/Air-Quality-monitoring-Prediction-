@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Live Data - Air Quality Monitor{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Live Air Quality Data</h1>
+    <p class="subtitle">Latest API measurements with source information</p>
+</div>
+
+<div class="location-selector">
+    <div class="location-controls">
+        <button class="btn btn-primary" id="useMyLocationBtn" onclick="useMyLocation()">
+            📍 Use My Location
+        </button>
+        <div class="search-container">
+            <input type="text" id="citySearch" placeholder="🔎 Search any location worldwide (e.g., New York, Tokyo, London...)" autocomplete="off">
+            <div class="search-results" id="searchResults"></div>
+        </div>
+        <button class="btn btn-secondary" id="syncBtn" onclick="syncData()">
+            🔄 Synchronize Data
+        </button>
+    </div>
+    <div class="location-info">
+        <span class="location-label">Selected Location:</span>
+        <span class="location-value" id="selectedLocation">Not selected</span>
+        <span class="live-badge" id="liveBadge" style="margin-left: auto;">
+            <span class="live-dot"></span> LIVE
+        </span>
+    </div>
+</div>
+
+<div class="loading-indicator" id="loadingIndicator" style="display: none;">
+    <div class="liquid-spinner"></div>
+    <p>Fetching live data...</p>
+</div>
+
+<div class="error-message" id="errorMessage" style="display: none;"></div>
+
+<div class="card" id="liveDataCard" style="display: none;">
+    <h3>Latest Measurements</h3>
+    <div class="table-responsive">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Pollutant</th>
+                    <th>Value</th>
+                    <th>Unit</th>
+                    <th>Timestamp</th>
+                    <th>Station</th>
+                    <th>Source</th>
+                </tr>
+            </thead>
+            <tbody id="liveDataTableBody">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="no-data-message" id="noDataMessage" style="display: none;">
+    <p>No air-quality data is available offline. Please connect to the internet and synchronize data.</p>
+</div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        loadCityData('Delhi');
+    });
+</script>
+{% endblock %}
